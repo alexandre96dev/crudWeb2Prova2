@@ -1,25 +1,61 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('nodejs', 'root', '12345678', {dialect: 'mysql', host: 'localhost'})
 
-const postagem = sequelize.define('postagem',{
-    title:{
-        type : Sequelize.STRING
+//CONEXÃO COM O BANCO
+const sequelize = new Sequelize('db', 'root', '12345678', {dialect: 'mysql', host: 'localhost'})
 
-    
-    },
-    conteudo: {
-        type : Sequelize.TEXT
+const usuario = sequelize.define('usuario',{
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
 
-    } 
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
 
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+
+      },
+      password: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      cidade: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
 })
-postagem.sync({
-    force: true
+usuario.sync({force:true})
 
+const livro = sequelize.define('livro',{
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      ISBN: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      Autor: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      livro: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
 })
+livro.sync({force:true})
 
-// postagem.findAll({raw:true}).then( postagem => {
-// console.log(postagem);
+//LISTAR USUARIOS
+usuario.findAll({raw:true}).then( usuario => {
+    console.log(usuario);})
 
-// })
-    
+//LISTAR LIVROS
+livro.findAll({raw:true}).then( livro => {
+console.log(livro);})
