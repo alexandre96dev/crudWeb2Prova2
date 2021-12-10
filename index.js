@@ -16,31 +16,18 @@ app.use(cors())
 
 app.use(express.json())
 
+
+
 let users = [
-	{ 
-	  id: 1, 
-	  name: "Jakeliny Gracielly",
-	  email: "teste@gmail.com",
-	  senha: "teste123",
-	  city: "São Paulo"
-	}	
+	usuario.all()
 ]
 
 let livros = [
-	{ 
-	  id: 1, 
-	  name: "Jakeliny Gracielly",
-	  isbn: "teste@gmail.com",
-	  autor: "teste123",
-	  data: "São Paulo"
-	}	
+	livro.all()
 ]
-app.route('/api').get((req, res) =>{
-	usuario.create(
-		users
-	)
-	res.json(users)
-} )
+app.route('/api').get((req, res) => res.json({ 
+	users
+}))
 
 
 
@@ -63,7 +50,14 @@ app.route('/api/').post((req, res) => {
 		  senha: req.body.senha,
 		  city: req.body.city 
 		}
-	) 
+	)
+	usuario.create({
+		id: lastId + 1, 
+		name: req.body.name, 
+		email: req.body.email,
+		password: req.body.senha,
+		cidade: req.body.city 
+	}) 
 	res.json('Saved user')
 })
 app.route('/api/:id').put((req, res) => { 
@@ -90,7 +84,11 @@ app.route('/api/:id').put((req, res) => {
 app.route('/api/:id').delete((req, res) => { 
 	const userId = req.params.id 
 	users = users.filter(user => Number(user.id) !== Number(userId)) 
+
+	usuario.destroy({where: {'id': userId}})
 	res.json('Deleted User')
+
+
 })
 //--------------------------------------------------------------------------
 app.route('/book').get((req, res) => res.json({ 
@@ -115,7 +113,13 @@ app.route('/book/').post((req, res) => {
 		  autor: req.body.autor,
 		  data: req.body.data 
 		}
-	) 
+	)
+	livro.create({
+		id: lastId + 1, 
+		name: req.body.name, 
+		ISBN: req.body.isbn,
+		Autor: req.body.autor,
+	}) 
 	res.json('Saved user')
 })
 app.route('/book/:id').put((req, res) => { 
@@ -141,6 +145,7 @@ app.route('/book/:id').put((req, res) => {
 })
 app.route('/book/:id').delete((req, res) => { 
 	const livroId = req.params.id 
-	livros = livros.filter(livro => Number(livro.id) !== Number(livroId)) 
+	livros = livros.filter(livro => Number(livro.id) !== Number(livroId))
+	livro.destroy({where: {'id': livroId}}) 
 	res.json('Deleted livro')
 })

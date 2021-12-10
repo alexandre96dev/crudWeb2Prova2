@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 //CONEXÃO COM O BANCO
-const sequelize = new Sequelize('db', 'root', '12345678', {dialect: 'mysql', host: 'localhost'})
+const sequelize = new Sequelize('db', 'root', '', {dialect: 'mysql', host: 'localhost'})
 
 const usuario = sequelize.define('usuario',{
     id: {
@@ -22,7 +22,7 @@ const usuario = sequelize.define('usuario',{
 
       },
       password: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       cidade: {
