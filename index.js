@@ -1,8 +1,16 @@
+
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('db', 'root', '12345678', {dialect: 'mysql', host: 'localhost'})
+const usuarios = require('./models/usuario.js')
+const livro = require('./models/livro.js');
+const usuario = require('./models/usuario.js');
 
 app.listen(5500, () => console.log('Rodando na porta 5500'))
+
+
 
 app.use(cors())
 
@@ -27,9 +35,15 @@ let livros = [
 	  data: "São Paulo"
 	}	
 ]
-app.route('/api').get((req, res) => res.json({ 
-	users
-}))
+app.route('/api').get((req, res) =>{
+	usuario.create(
+		users
+	)
+	res.json(users)
+} )
+
+
+
 app.route('/api/:id').get((req, res) => { 
 	const userId = req.params.id 
 	const user = users.find(user => Number(user.id) === Number(userId)) 

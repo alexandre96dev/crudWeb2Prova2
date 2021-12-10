@@ -30,4 +30,4 @@ const usuario = sequelize.define('usuario',{
         allowNull: false,
       },
 })
-usuario.sync({force:true})
+module.exports = usuario
